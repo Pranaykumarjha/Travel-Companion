@@ -1,25 +1,29 @@
-import React from "react";
-import { CssBaseline,Grid } from "@mui/material";
-
-import Header from "./Components/Header/Header";
-import Map from "./Components/Map/Map";
-import List from "./Components/List/List";
-// import Placedetails from "./Components/PlaceDetails/Placedetails";
+import React from 'react';
+import { CssBaseline } from '@mui/material';
+import Header from './Components/Header/Header';
+import List from './Components/List/List'; // optional
+import Map from './Components/Map/Map';
 
 const App = () => {
   return (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <CssBaseline />
+
+      {/* Header */}
       <Header />
-      <Grid container spacing={3} style={{ width: "100%" }}>
-        <Grid item xs={12} md={4}>
+
+      {/* Main content */}
+      <div style={{ display: 'flex', flex: 1 }}>
+        {/* List (optional) */}
+        <div style={{ width: '300px', borderRight: '1px solid #ccc' }}>
           <List />
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Map />
-        </Grid>
-      </Grid>
-      
-    </>
-  )};
+        </div>
+
+        {/* Map */}
+        <Map />
+      </div>
+    </div>
+  );
+};
+
 export default App;
