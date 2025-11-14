@@ -2,8 +2,8 @@ import { makeStyles } from '@mui/styles';
 
 export default makeStyles(() => ({
   mapContainer: {
-    flex: 1,           // Fill remaining space in parent flex container
-    width: '100%',      // Full width
+    height:'80%',           // Fill remaining space in parent flex container
+    width: '80%',      // Full width
   },
   markerContainer: {
     position: 'absolute',
