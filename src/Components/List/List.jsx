@@ -10,7 +10,7 @@ import {
   Box
 } from '@mui/material';
 
-import PlaceDetails from '../PlaceDetails/PlaceDetails';
+import PlaceDetails from '../PlaceDetails/PlaceDetails.jsx';
 
 import {
   ContainerBox,
