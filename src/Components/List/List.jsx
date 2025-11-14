@@ -47,7 +47,7 @@ const List = ({ places, type, setType, rating, setRating, childClicked, isLoadin
       ) : (
         <>
           {/* Filters */}
-          <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
+          <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
             <FormControl sx={FormControlSx}>
               <InputLabel>Type</InputLabel>
               <Select value={type} label="Type" onChange={(e) => setType(e.target.value)}>
