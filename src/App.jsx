@@ -8,15 +8,30 @@ import Map from './Components/Map/Map';
 import { getPlacesData } from './api';
 const App = () => {
   const [places, setPlaces] = useState([]);
-  const[coordinates, setCoordinates]= useState({lat: 28.6139, lng: 77.2090});
+  const[coordinates, setCoordinates]= useState({});
   const[bounds, setBounds]= useState(null);
+  const [type, setType] = useState("restaurants");
+  const [rating, setRating] = useState("");
+  const [childClicked, setChildClicked] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    getPlacesData().then((data) => {
+    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+      setCoordinates({ lat: latitude, lng: longitude });
+    });
+   
+  }, []);
+  
+  useEffect(() => {
+    console.log(coordinates , bounds);
+    if (!bounds?.sw || !bounds?.ne) return; 
+
+    console.log('Fetching with:', bounds);
+    getPlacesData(bounds.sw , bounds.ne).then((data) => {
       console.log(data);
       setPlaces(data);
     });
    
-  }, [])
+  }, [coordinates, bounds]);
   
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -29,7 +44,13 @@ const App = () => {
       <div style={{ display: 'flex', flex: 1 }}>
         {/* List (optional) */}
         <div style={{ width: '300px', borderRight: '1px solid #ccc' }}>
-          <List />
+          <List places={places}
+            type={type}
+            setType={setType}
+            rating={rating}
+            setRating={setRating}
+            childClicked={childClicked}
+            isLoading={isLoading}/>
         </div>
 
         {/* Map */}
