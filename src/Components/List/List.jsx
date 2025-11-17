@@ -21,6 +21,7 @@ import {
 } from './styles';
 
 const List = ({ places, type, setType, rating, setRating, childClicked, isLoading }) => {
+  console.log({childClicked});
   const [elRefs, setElRefs] = useState([]);
 
   // Create refs for scrolling/highlighting

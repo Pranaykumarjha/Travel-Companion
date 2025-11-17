@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState , useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { CssBaseline } from '@mui/material';
 import Header from './Components/Header/Header';
@@ -8,8 +8,8 @@ import Map from './Components/Map/Map';
 import { getPlacesData } from './api';
 const App = () => {
   const [places, setPlaces] = useState([]);
-  const[coordinates, setCoordinates]= useState({});
-  const[bounds, setBounds]= useState(null);
+  const [coordinates, setCoordinates] = useState({});
+  const [bounds, setBounds] = useState(null);
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
   const [childClicked, setChildClicked] = useState(null);
@@ -18,21 +18,22 @@ const App = () => {
     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
       setCoordinates({ lat: latitude, lng: longitude });
     });
-   
+
   }, []);
-  
+
   useEffect(() => {
-    console.log(coordinates , bounds);
-    if (!bounds?.sw || !bounds?.ne) return; 
+    setIsLoading(true);
+    if (!bounds?.sw || !bounds?.ne) return;
 
     console.log('Fetching with:', bounds);
-    getPlacesData(bounds.sw , bounds.ne).then((data) => {
+    getPlacesData(bounds.sw, bounds.ne).then((data) => {
       console.log(data);
       setPlaces(data);
+      setIsLoading(false);
     });
-   
+
   }, [coordinates, bounds]);
-  
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <CssBaseline />
@@ -49,15 +50,21 @@ const App = () => {
             setType={setType}
             rating={rating}
             setRating={setRating}
-            childClicked={childClicked}
-            isLoading={isLoading}/>
+           childClicked={childClicked}
+            isLoading={isLoading} />
         </div>
 
         {/* Map */}
         <Map
-        setCoordinates={ setCoordinates}
-        setBounds={ setBounds }
-        coordinates={ coordinates} />
+          setCoordinates={setCoordinates}
+          setBounds={setBounds}
+          coordinates={coordinates}
+          places={places}
+          setChildClicked={setChildClicked}
+          type={type}
+          rating={rating}
+        />
+
       </div>
     </div>
   );
