@@ -3,70 +3,78 @@ import { useState, useEffect } from 'react';
 
 import { CssBaseline } from '@mui/material';
 import Header from './Components/Header/Header';
-import List from './Components/List/List'; // optional
+import List from './Components/List/List';
 import Map from './Components/Map/Map';
 import { getPlacesData } from './api';
+import { LoadScript } from "@react-google-maps/api";
+
+const libraries = ["places"];
+
 const App = () => {
   const [places, setPlaces] = useState([]);
   const [coordinates, setCoordinates] = useState({});
+  const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [bounds, setBounds] = useState(null);
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
   const [childClicked, setChildClicked] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
       setCoordinates({ lat: latitude, lng: longitude });
     });
-
   }, []);
+
+  useEffect(() => {
+    const filtered = places.filter((place) => Number(place.rating) > Number(rating));
+    setFilteredPlaces(filtered);
+  }, [rating]);
 
   useEffect(() => {
     setIsLoading(true);
     if (!bounds?.sw || !bounds?.ne) return;
 
-    console.log('Fetching with:', bounds);
-    getPlacesData(bounds.sw, bounds.ne).then((data) => {
-      console.log(data);
+    getPlacesData(type, bounds.sw, bounds.ne).then((data) => {
       setPlaces(data);
+      setFilteredPlaces([]);
       setIsLoading(false);
     });
 
-  }, [coordinates, bounds]);
+  }, [type, bounds]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <CssBaseline />
+    
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+        <CssBaseline />
 
-      {/* Header */}
-      <Header />
+        <Header setCoordinates={setCoordinates} />
 
-      {/* Main content */}
-      <div style={{ display: 'flex', flex: 1 }}>
-        {/* List (optional) */}
-        <div style={{ width: '300px', borderRight: '1px solid #ccc' }}>
-          <List places={places}
+        <div style={{ display: 'flex', flex: 1 }}>
+          <div style={{ width: '300px', borderRight: '1px solid #ccc' }}>
+            <List
+              places={filteredPlaces.length ? filteredPlaces : places}
+              type={type}
+              setType={setType}
+              rating={rating}
+              setRating={setRating}
+              childClicked={childClicked}
+              isLoading={isLoading}
+            />
+          </div>
+
+          <Map
+            setCoordinates={setCoordinates}
+            setBounds={setBounds}
+            coordinates={coordinates}
+            places={filteredPlaces.length ? filteredPlaces : places}
+            setChildClicked={setChildClicked}
             type={type}
-            setType={setType}
             rating={rating}
-            setRating={setRating}
-           childClicked={childClicked}
-            isLoading={isLoading} />
+          />
         </div>
-
-        {/* Map */}
-        <Map
-          setCoordinates={setCoordinates}
-          setBounds={setBounds}
-          coordinates={coordinates}
-          places={places}
-          setChildClicked={setChildClicked}
-          type={type}
-          rating={rating}
-        />
-
       </div>
-    </div>
+    
   );
 };
 

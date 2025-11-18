@@ -21,7 +21,7 @@ import {
 } from './styles';
 
 const List = ({ places, type, setType, rating, setRating, childClicked, isLoading }) => {
-  console.log({childClicked});
+  console.log({ childClicked });
   const [elRefs, setElRefs] = useState([]);
 
   // Create refs for scrolling/highlighting
@@ -77,13 +77,16 @@ const List = ({ places, type, setType, rating, setRating, childClicked, isLoadin
           {/* List */}
           <Grid container spacing={3} sx={ListSx}>
             {places?.map((place, i) => (
-              <Grid ref={elRefs[i]} key={i} item xs={12}>
-                <PlaceDetails
-                  selected={Number(childClicked) === i}
-                  refProp={elRefs[i]}
-                  place={place}
-                />
+              <Grid key={i} item xs={12}>
+                <div ref={elRefs[i]}>
+                  <PlaceDetails
+                    selected={Number(childClicked) === i}
+                    refProp={elRefs[i]}
+                    place={place}
+                  />
+                </div>
               </Grid>
+
             ))}
           </Grid>
         </>
