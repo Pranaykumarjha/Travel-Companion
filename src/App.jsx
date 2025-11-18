@@ -6,14 +6,14 @@ import Header from './Components/Header/Header';
 import List from './Components/List/List';
 import Map from './Components/Map/Map';
 import { getPlacesData } from './api';
-import { getWeatherData } from './api';
+// import { getWeatherData } from './api';
 import { LoadScript } from "@react-google-maps/api";
 
 const libraries = ["places"];
 
 const App = () => {
   const [places, setPlaces] = useState([]);
-  const [weatherData, setWeatherData] = useState([]); 
+  // const [weatherData, setWeatherData] = useState([]); 
   const [coordinates, setCoordinates] = useState({});
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [bounds, setBounds] = useState(null);
@@ -37,9 +37,9 @@ const App = () => {
     if (bounds) {
     setIsLoading(true);
     if (!bounds?.sw || !bounds?.ne) return;
-    getWeatherData(coordinates.lat, coordinates.lng).then((data) => {
-      setWeatherData(data);
-    });
+    // getWeatherData(coordinates.lat, coordinates.lng).then((data) => {
+    //   setWeatherData(data);
+    // });
 
     getPlacesData(type, bounds.sw, bounds.ne).then((data) => {
       setPlaces(data?.filter(place => place.name && place.num_reviews > 0));
@@ -79,7 +79,7 @@ const App = () => {
             setChildClicked={setChildClicked}
             type={type}
             rating={rating}
-            weatherData={weatherData}
+            // weatherData={weatherData}
           />
         </div>
       </div>

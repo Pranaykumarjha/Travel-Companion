@@ -1,7 +1,7 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
 import useStyles from "./styles";
-import mapStyles from "./mapStyles";
+// import mapStyles from "./mapStyles";
 import { Paper, Typography, Rating } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -19,7 +19,7 @@ const Map = ({ setCoordinates, setBounds, coordinates, places,setChildClicked,we
         defaultCenter={coordinates}
         center={coordinates}
         defaultZoom={14}
-        options={{ disableDefaultUI: true, zoomControl: true,styles: mapStyles  }}
+        options={{ disableDefaultUI: true, zoomControl: true  }}
 
       
         onChildClick={(child) => setChildClicked(child)}
@@ -67,11 +67,11 @@ const Map = ({ setCoordinates, setBounds, coordinates, places,setChildClicked,we
             )}
           </div>
         ))}
-        {weatherData?.list?.map((data, i) => (
+        {/* {weatherData?.list?.map((data, i) => (
           <div key={i} lat={data.coord.lat} lng={data.coord.lon}>
             <img height={100} src ={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`} alt="weather" />
           </div>
-        ))}
+        ))} */}
       </GoogleMapReact>
     </div>
   );
