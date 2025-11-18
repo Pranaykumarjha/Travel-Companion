@@ -53,7 +53,7 @@ const List = ({ places, type, setType, rating, setRating, childClicked, isLoadin
               <InputLabel>Type</InputLabel>
               <Select value={type} label="Type" onChange={(e) => setType(e.target.value)}>
                 <MenuItem value="restaurants">Restaurants</MenuItem>
-                <MenuItem value="hotels">Hotels</MenuItem>
+                {/* <MenuItem value="hotels">Hotels</MenuItem> */}
                 <MenuItem value="attractions">Attractions</MenuItem>
               </Select>
             </FormControl>

@@ -1,12 +1,12 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
 import useStyles from "./styles";
-
+import mapStyles from "./mapStyles";
 import { Paper, Typography, Rating } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-const Map = ({ setCoordinates, setBounds, coordinates, places,setChildClicked }) => {
+const Map = ({ setCoordinates, setBounds, coordinates, places,setChildClicked,weatherData }) => {
   const classes = useStyles();
   const isDesktop = useMediaQuery("(min-width:600px)");
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -19,7 +19,7 @@ const Map = ({ setCoordinates, setBounds, coordinates, places,setChildClicked })
         defaultCenter={coordinates}
         center={coordinates}
         defaultZoom={14}
-        options={{ disableDefaultUI: true, zoomControl: true }}
+        options={{ disableDefaultUI: true, zoomControl: true,styles: mapStyles  }}
 
       
         onChildClick={(child) => setChildClicked(child)}
@@ -65,6 +65,11 @@ const Map = ({ setCoordinates, setBounds, coordinates, places,setChildClicked })
                 />
               </Paper>
             )}
+          </div>
+        ))}
+        {weatherData?.list?.map((data, i) => (
+          <div key={i} lat={data.coord.lat} lng={data.coord.lon}>
+            <img height={100} src ={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`} alt="weather" />
           </div>
         ))}
       </GoogleMapReact>
