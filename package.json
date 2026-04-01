@@ -18,6 +18,7 @@
     "@mui/styles": "^6.5.0",
     "@react-google-maps/api": "^2.20.7",
     "axios": "^1.13.0",
+    "baseline-browser-mapping": "^2.10.0",
     "google-map-react": "^2.2.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
